@@ -11,12 +11,20 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("dingtalk")
 public class DingtalkProperties {
     /**
-     * 应用凭证AppKey
+     * 应用appkey
      */
-    private String appKey;
+    private String clientId;
 
     /**
-     * 应用凭证AppSecret
+     * 应用appSecret
      */
-    private String appSecret;
+    private String clientSecret;
+
+    /**
+     * 消息回调地址
+     * <p>
+     *
+     * @link {<a href="https://open.dingtalk.com/document/orgapp/the-application-robot-in-the-enterprise-sends-a-single-chat">...</a>}
+     */
+    private String msgCallbackTopic = "/v1.0/im/bot/messages/get";
 }

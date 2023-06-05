@@ -1,7 +1,10 @@
 package com.zbq.dingrobot.config;
 
-import com.aliyun.dingtalkoauth2_1_0.Client;
-import com.aliyun.teaopenapi.models.Config;
+
+import com.dingtalk.open.app.api.OpenDingTalkClient;
+import com.dingtalk.open.app.api.OpenDingTalkStreamClientBuilder;
+import com.dingtalk.open.app.api.security.AuthClientCredential;
+import com.zbq.dingrobot.handler.RobotMsgCallbackConsumer;
 import com.zbq.dingrobot.properties.DingtalkProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,29 +18,14 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(DingtalkProperties.class)
 public class DingTalkConfig {
 
-    @Bean
-    public Client createClient() {
-        Config config = new Config();
-        config.protocol = "https";
-        config.regionId = "central";
-        try {
-            return new Client(config);
-        } catch (Exception e) {
-            throw new RuntimeException("create dingTalk client fail");
-        }
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public OpenDingTalkClient createClient(RobotMsgCallbackConsumer consumer, DingtalkProperties properties) {
+        return OpenDingTalkStreamClientBuilder
+                .custom()
+                .credential(new AuthClientCredential(properties.getClientId(), properties.getClientSecret()))
+                .registerCallbackListener("/v1.0/im/bot/messages/get", consumer)
+                .build();
     }
-
-    /*public static Client getClient(String appKey) {
-        Client client = createClient();
-        GetAccessTokenRequest request = new GetAccessTokenRequest()
-                .setAppKey("")
-                .setAppSecret("");
-        GetAccessTokenResponse accessToken = client.getAccessToken(request);
-        GetAccessTokenResponseBody body = accessToken.getBody();
-        String accessToken1 = body.accessToken;
-
-        return null;
-    }*/
 
 
 }

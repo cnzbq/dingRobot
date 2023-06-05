@@ -1,1 +1,3 @@
-
+dingtalk:
+  client-id: "AppKey"
+  client-secret: "AppSecret"
