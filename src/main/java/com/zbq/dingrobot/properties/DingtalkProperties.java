@@ -27,4 +27,14 @@ public class DingtalkProperties {
      * @link {<a href="https://open.dingtalk.com/document/orgapp/the-application-robot-in-the-enterprise-sends-a-single-chat">...</a>}
      */
     private String msgCallbackTopic = "/v1.0/im/bot/messages/get";
+
+    /**
+     * 钉钉机器人webhook地址
+     */
+    private String webHook;
+
+    /**
+     * 钉钉机器人加签密钥
+     */
+    private String secret;
 }

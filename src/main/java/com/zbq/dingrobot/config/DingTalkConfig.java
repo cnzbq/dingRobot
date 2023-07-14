@@ -6,6 +6,7 @@ import com.dingtalk.open.app.api.OpenDingTalkStreamClientBuilder;
 import com.dingtalk.open.app.api.security.AuthClientCredential;
 import com.zbq.dingrobot.handler.RobotMsgCallbackConsumer;
 import com.zbq.dingrobot.properties.DingtalkProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 6/28/2022
  */
 @Configuration
+@ConditionalOnProperty(prefix = "dingtalk", name = "clientId")
 @EnableConfigurationProperties(DingtalkProperties.class)
 public class DingTalkConfig {
 
