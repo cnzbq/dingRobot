@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author Dingwq
+ * @author zbq
  * @since 7/14/2023
  */
 @Slf4j

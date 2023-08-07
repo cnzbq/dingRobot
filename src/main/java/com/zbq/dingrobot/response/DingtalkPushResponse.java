@@ -3,7 +3,7 @@ package com.zbq.dingrobot.response;
 import lombok.Data;
 
 /**
- * @author Dingwq
+ * @author zbq
  * @since 8/7/2023
  */
 @Data

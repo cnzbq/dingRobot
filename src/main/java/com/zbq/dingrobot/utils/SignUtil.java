@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 /**
- * @author Dingwq
+ * @author zbq
  * @since 7/13/2023
  */
 public class SignUtil {

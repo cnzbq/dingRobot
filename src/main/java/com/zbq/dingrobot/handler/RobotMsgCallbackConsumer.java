@@ -22,7 +22,7 @@ import java.util.Map;
  * 通过webhook回复消息 {@link <a href="https://open.dingtalk.com/document/isvapp/enterprise-internal-robots-use-webhook-to-send-group-chat-messages">...</a>}
  * webhook消息支持类型 {@link <a href="https://open.dingtalk.com/document/orgapp/robot-message-types-and-data-format#title-z74-8to-i7e">...</a>}
  *
- * @author Dingwq
+ * @author zbq
  * @since 6/1/2023
  */
 @Slf4j
