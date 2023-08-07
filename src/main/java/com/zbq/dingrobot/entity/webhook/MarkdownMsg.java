@@ -11,6 +11,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class MarkdownMsg extends MsgBase {
 
+    public MarkdownMsg() {
+        super("markdown");
+    }
+
     /**
      * markdown类型
      */
@@ -20,11 +24,6 @@ public class MarkdownMsg extends MsgBase {
      * @人列表
      */
     private At at;
-
-    @Override
-    public String getMsgType() {
-        return "markdown";
-    }
 
     @Data
     public static class Markdown {

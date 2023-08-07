@@ -11,15 +11,14 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class LinkMsg extends MsgBase {
 
+    public LinkMsg() {
+        super("link");
+    }
+
     /**
      * link类型
      */
     private Link link;
-
-    @Override
-    public String getMsgType() {
-        return "link";
-    }
 
     @Data
     public static class Link {

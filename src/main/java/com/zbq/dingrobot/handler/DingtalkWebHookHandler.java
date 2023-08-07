@@ -1,9 +1,9 @@
 package com.zbq.dingrobot.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.zbq.dingrobot.entity.webhook.MsgBase;
 import com.zbq.dingrobot.properties.DingtalkProperties;
+import com.zbq.dingrobot.response.DingtalkPushResponse;
 import com.zbq.dingrobot.utils.SignUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +30,21 @@ public class DingtalkWebHookHandler {
     private DingtalkProperties dingtalkProperties;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private RestTemplate restTemplate;
 
     private final static String PARAM = "&timestamp=%s&sign=%s";
 
-    public <T extends MsgBase> String send(T msg) throws JsonProcessingException {
+    public <T extends MsgBase> DingtalkPushResponse send(T msg) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.ALL));
-        HttpEntity<String> httpEntity = new HttpEntity<>(objectMapper.writeValueAsString(msg), headers);
+        HttpEntity<String> httpEntity = new HttpEntity<>(new Gson().toJson(msg), headers);
         String time = String.valueOf(System.currentTimeMillis());
         String params = String.format(PARAM, time, SignUtil.sign(time, dingtalkProperties.getSecret()));
         ResponseEntity<String> response = restTemplate.postForEntity(dingtalkProperties.getWebHook() + params, httpEntity, String.class);
-        log.info("推送结果：{}", objectMapper.writeValueAsString(response));
+        log.info("推送结果：{}", new Gson().toJson(response));
 
-        return response.getBody();
+        return new Gson().fromJson(response.getBody(), DingtalkPushResponse.class);
     }
 
 }

@@ -11,15 +11,14 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ActionCardMsg extends MsgBase {
 
+    public ActionCardMsg() {
+        super("actionCard");
+    }
+
     /**
      * actionCard类型
      */
     private ActionCard actionCard;
-
-    @Override
-    public String getMsgType() {
-        return "actionCard";
-    }
 
     @Data
     @EqualsAndHashCode(callSuper = true)

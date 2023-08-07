@@ -12,9 +12,9 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class FeedCardMsg extends MsgBase {
-    @Override
-    public String getMsgType() {
-        return "feedCard";
+
+    public FeedCardMsg() {
+        super("feedCard");
     }
 
     private FeedCard feedCard;

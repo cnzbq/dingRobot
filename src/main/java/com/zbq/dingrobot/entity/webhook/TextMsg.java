@@ -11,6 +11,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class TextMsg extends MsgBase {
 
+    public TextMsg() {
+        super("text");
+    }
+
     /**
      * text类型
      */
@@ -20,11 +24,6 @@ public class TextMsg extends MsgBase {
      * @人列表
      */
     private At at;
-
-    @Override
-    public String getMsgType() {
-        return "text";
-    }
 
     public static class Text {
         /**
