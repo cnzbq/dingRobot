@@ -38,7 +38,7 @@ public class PushCookBookTask {
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
     //  @Scheduled(cron = "0 0/15 10,11 * * ? ")
-    @Scheduled(cron = "0 0/1 * * * ? ")
+    @Scheduled(cron = "${dingtalk.push.cron}")
     public void push() throws IOException {
         String lastDate = AppRecord.lastDate();
         LocalDate now = LocalDate.now();
