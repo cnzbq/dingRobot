@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +76,7 @@ public class CookBookResponse {
         if (CollectionUtils.isEmpty(data) || !StringUtils.hasText(data.get(0))) {
             return;
         }
+        data = blankSeparatorHandler(data);
 
         String[] typeText = mapping.get(type);
         sb.append(String.format(head, typeText[0], typeText[1]));
@@ -88,6 +90,18 @@ public class CookBookResponse {
             String second = (i + 1 < length) ? data.get(i + 1) : "";
             sb.append(String.format(body, first, second));
         }
+    }
+
+    private static List<String> blankSeparatorHandler(List<String> data) {
+        if (data.size() == 1) {
+            String first = data.get(0);
+            if (first.contains(" ")) {
+                String[] temp = first.replaceAll("(( )+|(\n)+)", " ").split(" ");
+                return Arrays.stream(temp).toList();
+            }
+        }
+
+        return data;
     }
 
     private static final String head = """

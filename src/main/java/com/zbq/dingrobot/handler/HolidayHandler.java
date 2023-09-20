@@ -28,7 +28,7 @@ public class HolidayHandler {
 
     /**
      * @param date yyyy-MM-dd
-     * @return true:是节假日
+     * @return true:不是节假日
      */
     public boolean isHoliday(String date) {
         //https://date.appworlds.cn/work?date=2021-07-14

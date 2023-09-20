@@ -50,10 +50,10 @@ public class PushCookBookTask {
             }
         }
 
-        /*if (holidayHandler.isHoliday(now.format(DateTimeFormatter.ofPattern(DATE_PATTERN)))) {
+        if (!holidayHandler.isHoliday(now.format(DateTimeFormatter.ofPattern(DATE_PATTERN)))) {
             log.info("今天是节假日，不推送");
             return;
-        }*/
+        }
 
         CookBookResponse cookBookResponse = cookBookGetHandler.get();
         CookBookResponse.CookBook cookBook = cookBookResponse.getData();
@@ -61,6 +61,11 @@ public class PushCookBookTask {
         LocalDate dayTime = LocalDate.parse(todayTime, DateTimeFormatter.ofPattern(DATE_PATTERN));
         if (!dayTime.isEqual(now)) {
             log.info("菜单不是今天的，不推送");
+            return;
+        }
+
+        if (cookBook.getLunch().isEmpty()) {
+            log.info("菜单不全，不推送");
             return;
         }
 
