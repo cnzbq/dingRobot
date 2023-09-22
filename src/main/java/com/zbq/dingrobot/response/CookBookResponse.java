@@ -54,6 +54,26 @@ public class CookBookResponse {
         public String toMarkdown() {
             return build(this);
         }
+
+        public String toActionCardMarkdown() {
+            String pic = "![screenshot](https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=320&h=160&dpr=1)\n\n";
+            String lunch = "> **【午餐】** %s \n\n";
+            String lunchSnack = "> **【小吃】** %s \n\n";
+            String foot = this.todayTime.get(0) + " 发布";
+
+            return pic + actionCardBuild(lunch, this.lunch) +
+                    actionCardBuild(lunchSnack, this.lunchSnack) +
+                    foot;
+        }
+    }
+
+    private static String actionCardBuild(String template, List<String> data) {
+        if (CollectionUtils.isEmpty(data) || !StringUtils.hasText(data.get(0))) {
+            return String.format(template, "");
+        }
+
+        data = blankSeparatorHandler(data);
+        return String.format(template, String.join(", ", data));
     }
 
     private static String build(CookBookResponse.CookBook cookBook) {
@@ -96,7 +116,8 @@ public class CookBookResponse {
         if (data.size() == 1) {
             String first = data.get(0);
             if (first.contains(" ")) {
-                String[] temp = first.replaceAll("(( )+|(\n)+)", " ").split(" ");
+                String[] temp = first.replaceAll("\\n", " ")
+                        .replaceAll("(( )+|(\n)+)", " ").split(" ");
                 return Arrays.stream(temp).toList();
             }
         }

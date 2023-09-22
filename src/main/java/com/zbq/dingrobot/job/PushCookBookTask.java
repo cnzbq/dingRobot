@@ -1,7 +1,7 @@
 package com.zbq.dingrobot.job;
 
 import com.google.gson.Gson;
-import com.zbq.dingrobot.entity.webhook.MarkdownMsg;
+import com.zbq.dingrobot.entity.webhook.ActionCardMsg;
 import com.zbq.dingrobot.handler.CookBookGetHandler;
 import com.zbq.dingrobot.handler.DingtalkWebHookHandler;
 import com.zbq.dingrobot.handler.HolidayHandler;
@@ -69,18 +69,33 @@ public class PushCookBookTask {
             return;
         }
 
-        MarkdownMsg markdownMsg = new MarkdownMsg();
+        /*MarkdownMsg msg = new MarkdownMsg();
         MarkdownMsg.Markdown markdown = new MarkdownMsg.Markdown();
         markdown.setTitle("今日菜单");
         markdown.setText(cookBook.toMarkdown());
-        markdownMsg.setMarkdown(markdown);
+        markdownMsg.setMarkdown(markdown);*/
+        ActionCardMsg msg = actionCardMsg(cookBook);
 
-        DingtalkPushResponse result = dingtalkWebHookHandler.send(markdownMsg);
+        DingtalkPushResponse result = dingtalkWebHookHandler.send(msg);
         if (0 != result.getErrcode()) {
             log.error("推送失败，{}", new Gson().toJson(result));
             return;
         }
 
         AppRecord.writeLastDate(now.format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+    }
+
+
+    public ActionCardMsg actionCardMsg(CookBookResponse.CookBook cookBook) {
+        ActionCardMsg msg = new ActionCardMsg();
+        ActionCardMsg.SingleActionCard singleActionCard = new ActionCardMsg.SingleActionCard();
+        singleActionCard.setSingleTitle("查看天气");
+        singleActionCard.setSingleURL("https://m.seniverse.com/weather/WRR2Q2Z7CXWM?marketing=1&version=2.1");
+        singleActionCard.setTitle("今日菜单");
+        singleActionCard.setText(cookBook.toActionCardMarkdown());
+        singleActionCard.setBtnOrientation("0");
+        msg.setActionCard(singleActionCard);
+
+        return msg;
     }
 }
