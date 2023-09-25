@@ -2,6 +2,7 @@ package com.zbq.dingrobot.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+import com.zbq.dingrobot.entity.webhook.ImageFactory;
 import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -56,7 +57,7 @@ public class CookBookResponse {
         }
 
         public String toActionCardMarkdown() {
-            String pic = "![screenshot](https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=320&h=160&dpr=1)\n\n";
+            String pic = "![screenshot](" + ImageFactory.getPic() + ")\n\n";
             String lunch = "> **【午餐】** %s \n\n";
             String lunchSnack = "> **【小吃】** %s \n\n";
             String foot = this.todayTime.get(0) + " 发布";
@@ -87,7 +88,7 @@ public class CookBookResponse {
     }
 
     private static void wrap(StringBuilder sb) {
-        if (sb.length() != 0) {
+        if (!sb.isEmpty()) {
             sb.append("\n");
         }
     }
